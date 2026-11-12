@@ -1,0 +1,713 @@
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#173b32">
+
+    <title>RUHATÁR – Ruházati nyilvántartó</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+</head>
+
+<body>
+
+    <!-- BEJELENTKEZÉS -->
+    <section id="authSection" class="auth-section">
+        <div class="auth-card">
+
+            <div class="brand">
+                <div class="brand-icon">R</div>
+                <h1>RUHATÁR</h1>
+                <p>Ruházati nyilvántartó rendszer</p>
+            </div>
+
+            <div id="loginView">
+                <h2>Bejelentkezés</h2>
+
+                <form id="loginForm">
+                    <label for="loginEmail">E-mail cím</label>
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        autocomplete="email"
+                        required
+                    >
+
+                    <label for="loginPassword">Jelszó</label>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button type="submit" class="primary-button">
+                        Bejelentkezés
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    Még nincs fiókod?
+                    <button type="button" id="showRegister">
+                        Regisztráció
+                    </button>
+                </p>
+            </div>
+
+            <div id="registerView" hidden>
+                <h2>Regisztráció</h2>
+
+                <form id="registerForm">
+                    <label for="registerName">Teljes név</label>
+                    <input
+                        type="text"
+                        id="registerName"
+                        autocomplete="name"
+                        required
+                    >
+
+                    <label for="registerEmail">E-mail cím</label>
+                    <input
+                        type="email"
+                        id="registerEmail"
+                        autocomplete="email"
+                        required
+                    >
+
+                    <label for="registerPassword">Jelszó</label>
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                    <label for="registerRole">Igényelt szerepkör</label>
+                    <select id="registerRole" required>
+                        <option value="">Válassz szerepkört</option>
+                        <option value="foster_parent">Nevelőszülő</option>
+                        <option value="advisor">Nevelőszülői tanácsadó</option>
+                        <option value="viewer">Megfigyelő</option>
+                        <option value="admin">Adminisztrátor</option>
+                    </select>
+
+                    <button type="submit" class="primary-button">
+                        Regisztráció
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    Már van fiókod?
+                    <button type="button" id="showLogin">
+                        Bejelentkezés
+                    </button>
+                </p>
+            </div>
+
+            <div id="pendingView" hidden>
+                <h2>Regisztráció beérkezett</h2>
+                <p>
+                    A hozzáférésed adminisztrátori ellenőrzésre vár.
+                    A jóváhagyásig a rendszer védett adatai nem érhetők el.
+                </p>
+                <button type="button" id="pendingLogout" class="secondary-button">
+                    Kijelentkezés
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ALKALMAZÁS -->
+    <div id="appSection" class="app-layout" hidden>
+
+        <!-- OLDALSÁV -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <div class="brand-icon">R</div>
+                <div>
+                    <strong>RUHATÁR</strong>
+                    <small>Nyilvántartó rendszer</small>
+                </div>
+            </div>
+
+            <nav class="main-navigation">
+
+                <button class="nav-item active" data-page="dashboard">
+                    <span>▦</span> Vezérlőpult
+                </button>
+
+                <button class="nav-item" data-page="children">
+                    <span>♧</span> Gyermekek
+                </button>
+
+                <button class="nav-item" data-page="purchases">
+                    <span>▤</span> Vásárlások
+                </button>
+
+                <button class="nav-item" data-page="receipts">
+                    <span>▧</span> Bizonylatok
+                </button>
+
+                <button class="nav-item" data-page="settlements">
+                    <span>▥</span> Elszámolások
+                </button>
+
+                <button class="nav-item admin-only" data-page="users" hidden>
+                    <span>♙</span> Felhasználók
+                </button>
+
+                <button class="nav-item admin-only" data-page="settings" hidden>
+                    <span>⚙</span> Beállítások
+                </button>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <div>
+                        <strong id="sidebarUserName">Felhasználó</strong>
+                        <small id="sidebarUserRole">Szerepkör</small>
+                    </div>
+                </div>
+
+                <button type="button" id="logoutButton" class="logout-button">
+                    Kijelentkezés
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- FŐ TARTALOM -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1 id="pageTitle">Vezérlőpult</h1>
+                    <p id="pageSubtitle">A RUHATÁR rendszer áttekintése</p>
+                </div>
+
+                <div class="topbar-user">
+                    <span id="topbarUserName">Felhasználó</span>
+                </div>
+            </header>
+
+            <!-- VEZÉRLŐPULT -->
+            <section id="page-dashboard" class="page active">
+
+                <div class="welcome-section">
+                    <h2>Üdvözlünk a RUHATÁR rendszerben!</h2>
+                    <p>A gyermekek ruházati és sportkereteinek nyilvántartása.</p>
+                </div>
+
+                <div class="statistics-grid">
+
+                    <article class="stat-card">
+                        <span>Nyilvántartott gyermekek</span>
+                        <strong id="statChildren">0</strong>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>Rögzített vásárlások</span>
+                        <strong id="statPurchases">0</strong>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>Feltöltött bizonylatok</span>
+                        <strong id="statReceipts">0</strong>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>Ellenőrzésre vár</span>
+                        <strong id="statPending">0</strong>
+                    </article>
+
+                </div>
+
+                <div class="content-card">
+                    <div class="section-heading">
+                        <div>
+                            <h3>Legutóbbi vásárlások</h3>
+                            <p>A legutóbb rögzített tételek</p>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Gyermek</th>
+                                    <th>Vásárlás időpontja</th>
+                                    <th>Bizonylatszám</th>
+                                    <th>Megnevezés</th>
+                                    <th>Mennyiség</th>
+                                    <th>Teljes ár</th>
+                                    <th>Kategória</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="dashboardRecentPurchases">
+                                <tr>
+                                    <td colspan="7">Adatok betöltése...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- GYERMEKEK -->
+            <section id="page-children" class="page">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Gyermekek</h2>
+                        <p>A nyilvántartott gyermekek adatai</p>
+                    </div>
+
+                    <button
+                        class="primary-button admin-only"
+                        id="addChildButton"
+                        hidden>
+                        + Új gyermek
+                    </button>
+                </div>
+
+                <div class="content-card">
+                    <div class="toolbar">
+                        <input
+                            type="search"
+                            id="childSearch"
+                            placeholder="Gyermek keresése..."
+                        >
+                    </div>
+
+                    <div id="childrenList" class="children-grid">
+                        <p>Gyermekek betöltése...</p>
+                    </div>
+                </div>
+
+                <!-- GYERMEK ADATLAP -->
+                <div id="childDetail" class="content-card" hidden>
+
+                    <div class="section-heading">
+                        <div>
+                            <h2 id="childDetailName">Gyermek adatlapja</h2>
+                            <p id="childDetailBirthDate"></p>
+                        </div>
+
+                        <button
+                            type="button"
+                            id="closeChildDetail"
+                            class="secondary-button">
+                            Vissza
+                        </button>
+                    </div>
+
+                    <div class="statistics-grid">
+                        <article class="stat-card">
+                            <span>Ruhanemű / lábbeli keret</span>
+                            <strong id="childClothingBudget">0 Ft</strong>
+                            <small id="childClothingRemaining">Maradék: 0 Ft</small>
+                        </article>
+
+                        <article class="stat-card">
+                            <span>Sportkeret</span>
+                            <strong id="childSportsBudget">0 Ft</strong>
+                            <small id="childSportsRemaining">Maradék: 0 Ft</small>
+                        </article>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="section-heading">
+                            <div>
+                                <h3>Elszámolási táblázat</h3>
+                                <p>A gyermek összes vásárlása</p>
+                            </div>
+
+                            <button
+                                type="button"
+                                id="childAddPurchase"
+                                class="primary-button foster-only"
+                                hidden>
+                                + Vásárlás rögzítése
+                            </button>
+                        </div>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Vásárlás időpontja</th>
+                                        <th>Nyugta/számla sorszáma</th>
+                                        <th>Megnevezés</th>
+                                        <th>Mennyiség</th>
+                                        <th>Teljes ár</th>
+                                        <th>Kategória</th>
+                                        <th>Állapot</th>
+                                        <th>Művelet</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="childPurchaseTable">
+                                    <tr>
+                                        <td colspan="8">Vásárlások betöltése...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h3>Feltöltött bizonylatok</h3>
+                        <p>A gyermekhez kapcsolódó összes bizonylat</p>
+
+                        <div id="childReceiptsList" class="receipt-grid">
+                            <p>Bizonylatok betöltése...</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- VÁSÁRLÁSOK -->
+            <section id="page-purchases" class="page">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Vásárlások</h2>
+                        <p>Vásárlások rögzítése és kezelése</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        id="addPurchaseButton"
+                        class="primary-button foster-only"
+                        hidden>
+                        + Új vásárlás
+                    </button>
+                </div>
+
+                <div class="content-card">
+
+                    <div class="toolbar">
+                        <input
+                            type="search"
+                            id="purchaseSearch"
+                            placeholder="Keresés..."
+                        >
+
+                        <select id="purchaseCategoryFilter">
+                            <option value="">Minden kategória</option>
+                            <option value="clothing">Ruhanemű / lábbeli</option>
+                            <option value="sports">Sport</option>
+                        </select>
+
+                        <select id="purchaseStatusFilter">
+                            <option value="">Minden állapot</option>
+                            <option value="recorded">Rögzítve</option>
+                            <option value="pending">Ellenőrzésre vár</option>
+                            <option value="reviewed">Ellenőrizve</option>
+                            <option value="approved">Jóváhagyva</option>
+                            <option value="rejected">Elutasítva</option>
+                        </select>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Gyermek</th>
+                                    <th>Vásárlás időpontja</th>
+                                    <th>Nyugta/számla sorszáma</th>
+                                    <th>Megnevezés</th>
+                                    <th>Mennyiség</th>
+                                    <th>Teljes ár</th>
+                                    <th>Kategória</th>
+                                    <th>Állapot</th>
+                                    <th>Művelet</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="purchasesTable">
+                                <tr>
+                                    <td colspan="9">Vásárlások betöltése...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- BIZONYLATOK -->
+            <section id="page-receipts" class="page">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Bizonylatok</h2>
+                        <p>Feltöltött számlák és nyugták</p>
+                    </div>
+
+                    <button
+                        type="button"
+                        id="uploadReceiptButton"
+                        class="primary-button foster-only"
+                        hidden>
+                        + Bizonylat feltöltése
+                    </button>
+                </div>
+
+                <div class="content-card">
+
+                    <div class="toolbar">
+                        <input
+                            type="search"
+                            id="receiptSearch"
+                            placeholder="Bizonylat keresése..."
+                        >
+                    </div>
+
+                    <div id="receiptsList" class="receipt-grid">
+                        <p>Bizonylatok betöltése...</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- ELSZÁMOLÁSOK -->
+            <section id="page-settlements" class="page">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Elszámolások</h2>
+                        <p>Összesített gyermekenkénti elszámolás</p>
+                    </div>
+
+                    <div class="button-group">
+                        <button
+                            type="button"
+                            id="exportExcelButton"
+                            class="secondary-button">
+                            Excel export
+                        </button>
+
+                        <button
+                            type="button"
+                            id="exportPdfButton"
+                            class="secondary-button">
+                            PDF export
+                        </button>
+
+                        <button
+                            type="button"
+                            id="printSettlementButton"
+                            class="secondary-button">
+                            Nyomtatás
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-card">
+
+                    <div class="toolbar">
+                        <input
+                            type="search"
+                            id="settlementSearch"
+                            placeholder="Gyermek vagy termék keresése..."
+                        >
+
+                        <select id="settlementYear">
+                            <option value="">Aktuális év</option>
+                        </select>
+
+                        <select id="settlementCategory">
+                            <option value="">Minden kategória</option>
+                            <option value="clothing">Ruhanemű / lábbeli</option>
+                            <option value="sports">Sport</option>
+                        </select>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Gyermek</th>
+                                    <th>Termék</th>
+                                    <th>Dátum</th>
+                                    <th>Kategória</th>
+                                    <th>Összeg</th>
+                                    <th>Elszámolási állapot</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="settlementsTable">
+                                <tr>
+                                    <td colspan="6">Elszámolások betöltése...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- FELHASZNÁLÓK -->
+            <section id="page-users" class="page admin-only" hidden>
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Felhasználók</h2>
+                        <p>Regisztrációk és jogosultságok kezelése</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>Jóváhagyásra váró felhasználók</h3>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Név</th>
+                                    <th>E-mail</th>
+                                    <th>Igényelt szerepkör</th>
+                                    <th>Állapot</th>
+                                    <th>Művelet</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="pendingUsersTable">
+                                <tr>
+                                    <td colspan="5">Felhasználók betöltése...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>Aktív felhasználók</h3>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Név</th>
+                                    <th>Szerepkör</th>
+                                    <th>Állapot</th>
+                                    <th>Művelet</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="activeUsersTable">
+                                <tr>
+                                    <td colspan="4">Felhasználók betöltése...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- BEÁLLÍTÁSOK -->
+            <section id="page-settings" class="page admin-only" hidden>
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Beállítások</h2>
+                        <p>A rendszer adminisztrációja</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>Éves keretek</h3>
+                    <p>Alapértelmezett éves keretek gyermekenként:</p>
+
+                    <div class="budget-settings">
+                        <div>
+                            <span>Ruhanemű / lábbeli</span>
+                            <strong>200 000 Ft</strong>
+                        </div>
+
+                        <div>
+                            <span>Sport</span>
+                            <strong>50 000 Ft</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h3>Módosítási napló</h3>
+                    <p>A rendszerben végrehajtott módosítások.</p>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Felhasználó</th>
+                                    <th>Táblázat</th>
+                                    <th>Művelet</th>
+                                    <th>Időpont</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="auditLogsTable">
+                                <tr>
+                                    <td colspan="4">Napló betöltése...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ÁLTALÁNOS MODÁL -->
+    <div id="modalOverlay" class="modal-overlay" hidden>
+        <div class="modal-card">
+            <button
+                type="button"
+                id="modalClose"
+                class="modal-close">
+                ×
+            </button>
+
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- ÉRTESÍTÉSEK -->
+    <div
+        id="notificationContainer"
+        class="notification-container"
+        aria-live="polite">
+    </div>
+
+    <!-- JAVASCRIPT FÁJLOK -->
+    <script src="app.js"></script>
+    <script src="children.js"></script>
+    <script src="purchases.js"></script>
+    <script src="receipts.js"></script>
+    <script src="settlements.js"></script>
+    <script src="admin.js"></script>
+
+</body>
+</html>

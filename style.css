@@ -1,0 +1,1499 @@
+
+:root {
+    --primary: #173b32;
+    --primary-light: #e8f0ec;
+    --background: #f5f7f6;
+    --surface: #ffffff;
+    --text: #202923;
+    --muted: #78827c;
+    --border: #e4e9e6;
+    --danger: #c44747;
+    --success: #27845b;
+    --warning: #c28a32;
+    --radius: 12px;
+    --shadow: 0 3px 15px rgba(20, 50, 38, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--background);
+    color: var(--text);
+    font-size: 14px;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* BEJELENTKEZÉS */
+
+.auth-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    background:
+        radial-gradient(circle at top left, #e2eee8, transparent 40%),
+        var(--background);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    padding: 38px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.brand-icon {
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: var(--primary);
+    color: white;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.brand h1 {
+    margin: 0;
+    letter-spacing: 3px;
+    font-size: 25px;
+}
+
+.brand p {
+    margin: 7px 0 0;
+    color: var(--muted);
+}
+
+.auth-card h2 {
+    margin: 0 0 22px;
+    font-size: 21px;
+}
+
+/* ŰRLAPOK */
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-weight: 600;
+    color: #39463f;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    min-height: 43px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(23, 59, 50, 0.08);
+}
+
+/* GOMBOK */
+
+.primary-button,
+.secondary-button,
+.logout-button {
+    min-height: 40px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.primary-button {
+    background: var(--primary);
+    color: white;
+}
+
+.primary-button:hover {
+    background: #245344;
+}
+
+.secondary-button {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.secondary-button:hover {
+    background: #dce9e1;
+}
+
+.logout-button {
+    width: 100%;
+    margin-top: 14px;
+    background: #f9eeee;
+    color: var(--danger);
+}
+
+.auth-card form .primary-button {
+    width: 100%;
+    margin-top: 22px;
+}
+
+.auth-switch {
+    margin: 24px 0 0;
+    text-align: center;
+    color: var(--muted);
+}
+
+.auth-switch button {
+    border: 0;
+    background: transparent;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* ALKALMAZÁS ELRENDEZÉS */
+
+.app-layout {
+    min-height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 16px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 8px 30px;
+}
+
+.sidebar-brand .brand-icon {
+    width: 42px;
+    height: 42px;
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 22px;
+    border-radius: 11px;
+}
+
+.sidebar-brand strong {
+    display: block;
+    letter-spacing: 2px;
+    font-size: 15px;
+}
+
+.sidebar-brand small {
+    display: block;
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.main-navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 13px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #59645e;
+    text-align: left;
+    font-weight: 500;
+}
+
+.nav-item span {
+    width: 20px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.nav-item:hover {
+    background: #f3f6f4;
+}
+
+.nav-item.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 800;
+}
+
+.user-info strong,
+.user-info small {
+    display: block;
+}
+
+.user-info strong {
+    font-size: 13px;
+}
+
+.user-info small {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* FŐ TARTALOM */
+
+.main-content {
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    margin-left: 250px;
+    padding: 30px 36px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.topbar h1 {
+    margin: 0;
+    font-size: 25px;
+}
+
+.topbar p {
+    margin: 7px 0 0;
+    color: var(--muted);
+}
+
+.topbar-user {
+    color: var(--muted);
+    font-weight: 600;
+}
+
+/* OLDALAK */
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.welcome-section {
+    margin-bottom: 25px;
+}
+
+.welcome-section h2 {
+    margin: 0 0 8px;
+    font-size: 21px;
+}
+
+.welcome-section p {
+    margin: 0;
+    color: var(--muted);
+}
+
+/* STATISZTIKÁK */
+
+.statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.stat-card {
+    min-width: 0;
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.stat-card span,
+.stat-card strong,
+.stat-card small {
+    display: block;
+}
+
+.stat-card span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.stat-card strong {
+    margin-top: 13px;
+    font-size: 26px;
+    color: var(--primary);
+}
+
+.stat-card small {
+    margin-top: 7px;
+    color: var(--muted);
+}
+
+/* KÁRTYÁK */
+
+.content-card {
+    margin-bottom: 20px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.content-card h3 {
+    margin: 0 0 9px;
+    font-size: 17px;
+}
+
+.content-card > p {
+    color: var(--muted);
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.section-heading h2,
+.section-heading h3 {
+    margin: 0;
+}
+
+.section-heading p {
+    margin: 6px 0 0;
+    color: var(--muted);
+}
+
+/* ESZKÖZTÁR */
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.toolbar input {
+    flex: 1;
+    min-width: 180px;
+}
+
+.toolbar select {
+    width: auto;
+    min-width: 160px;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* TÁBLÁZATOK */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+thead {
+    background: #f6f8f7;
+}
+
+th {
+    padding: 13px 14px;
+    color: #637068;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 14px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+}
+
+tbody tr:hover {
+    background: #fafcfb;
+}
+
+td .primary-button,
+td .secondary-button {
+    min-height: 32px;
+    padding: 6px 10px;
+    font-size: 12px;
+}
+
+/* GYERMEKKÁRTYÁK */
+
+.children-grid,
+.receipt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 15px;
+}
+
+.child-card,
+.receipt-card {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: white;
+}
+
+.child-card h3,
+.receipt-card h3 {
+    margin: 0 0 8px;
+}
+
+.child-card p,
+.receipt-card p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.child-card button {
+    width: 100%;
+    margin-top: 12px;
+}
+
+/* KERETEK */
+
+.budget-settings {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    margin-top: 18px;
+}
+
+.budget-settings > div {
+    padding: 17px;
+    border-radius: 9px;
+    background: var(--background);
+}
+
+.budget-settings span,
+.budget-settings strong {
+    display: block;
+}
+
+.budget-settings span {
+    color: var(--muted);
+}
+
+.budget-settings strong {
+    margin-top: 8px;
+    font-size: 20px;
+    color: var(--primary);
+}
+
+/* MODÁLIS ABLAK */
+
+.modal-overlay {
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 25, 20, 0.55);
+}
+
+.modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px;
+    border-radius: 14px;
+    background: white;
+    box-shadow: 0 15px 60px rgba(0, 0, 0, 0.15);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 7px;
+    background: #f1f3f2;
+    font-size: 22px;
+}
+
+/* ÉRTESÍTÉSEK */
+
+.notification-container {
+    position: fixed;
+    z-index: 200;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notification {
+    max-width: 360px;
+    padding: 14px 18px;
+    border-radius: 9px;
+    background: var(--primary);
+    color: white;
+    box-shadow: var(--shadow);
+}
+
+.notification.error {
+    background: var(--danger);
+}
+
+.notification.success {
+    background: var(--success);
+}
+
+/* ÁLLAPOTJELZŐK */
+
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #edf0ee;
+    color: #59645e;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status.approved,
+.status.success {
+    background: #e6f4eb;
+    color: #247548;
+}
+
+.status.pending {
+    background: #fff4df;
+    color: #9a6a18;
+}
+
+.status.rejected,
+.status.error {
+    background: #fbeaea;
+    color: #b33c3c;
+}
+
+/* MOBIL */
+
+@media (max-width: 1100px) {
+    .statistics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .main-content {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 760px) {
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 12px;
+    }
+
+    .app-layout {
+        display: block;
+    }
+
+    .sidebar-brand {
+        padding-bottom: 15px;
+    }
+
+    .main-navigation {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sidebar-bottom {
+        margin-top: 12px;
+        padding-top: 12px;
+    }
+
+    .main-content {
+        width: 100%;
+        margin: 0;
+        padding: 20px 14px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+    }
+
+    .topbar h1 {
+        font-size: 21px;
+    }
+
+    .statistics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .stat-card strong {
+        font-size: 21px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .toolbar {
+        flex-direction: column;
+    }
+
+    .toolbar select {
+        width: 100%;
+    }
+
+    .budget-settings {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-card {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 380px) {
+    .statistics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-item {
+        padding: 10px;
+        font-size: 12px;
+    }
+}
+
+.receipt-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.danger-button {
+    background: #dc2626;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 15px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.danger-button:hover {
+    background: #b91c1c;
+}
+
+/* Gyermeklista és adatlap műveletei */
+
+.child-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.child-management-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.child-management-controls[hidden] {
+    display: none;
+}
+
+.child-card {
+    position: relative;
+}
+
+.child-card-actions button,
+.child-management-controls button {
+    min-height: 38px;
+}
+
+@media (max-width: 600px) {
+    .child-card-actions {
+        flex-direction: column;
+    }
+
+    .child-card-actions button {
+        width: 100%;
+    }
+
+    .child-management-controls {
+        flex-direction: column;
+    }
+
+    .child-management-controls button {
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   RUHATÁR – GYERMEKEK MODUL
+   Modern, egységes, reszponzív megjelenés
+   ========================================================= */
+
+/* GYERMEKLISTA */
+
+#childrenList,
+.children-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+    align-items: stretch;
+}
+
+.child-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 22px;
+    overflow: hidden;
+    border: 1px solid #e3eae5;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 4px 18px rgba(23, 59, 50, 0.045);
+    transition: transform .2s ease, box-shadow .2s ease,
+                border-color .2s ease;
+}
+
+.child-card:hover {
+    transform: translateY(-3px);
+    border-color: #cbdcd1;
+    box-shadow: 0 10px 28px rgba(23, 59, 50, .09);
+}
+
+.child-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    margin-bottom: 18px;
+}
+
+.child-avatar {
+    width: 54px;
+    height: 54px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dce9e0;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #eaf3ed, #dcebe1);
+    color: #173b32;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: .5px;
+}
+
+.child-card-header h3 {
+    margin: 0;
+    color: #20382e;
+    font-size: 16px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.child-card-birth {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 12px 0;
+    border-top: 1px solid #edf1ee;
+    color: #77847c;
+    font-size: 12px;
+}
+
+.child-card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.child-card-actions button {
+    width: 100%;
+    min-height: 38px;
+    margin: 0;
+    padding: 9px 11px;
+    font-size: 12px;
+}
+
+.child-card-actions button:first-child {
+    grid-column: 1 / -1;
+}
+
+/* GYERMEK ADATLAP */
+
+#childDetail {
+    min-width: 0;
+    margin-top: 25px;
+    padding: 24px;
+    border: 1px solid #e2e9e4;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 5px 22px rgba(23, 59, 50, .045);
+    scroll-margin-top: 20px;
+}
+
+#childDetailName {
+    margin: 0;
+    color: #173b32;
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+#childDetailBirthDate {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 8px;
+    color: #77847c;
+    font-size: 13px;
+}
+
+/* ADMINISZTRÁCIÓ */
+
+.child-management-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 0 0 22px;
+    padding: 15px;
+    border: 1px solid #e8eee9;
+    border-radius: 12px;
+    background: #f8faf8;
+}
+
+.child-management-controls button {
+    min-height: 38px;
+    margin: 0;
+    padding: 9px 13px;
+    font-size: 12px;
+}
+
+/* NYOMTATÁSI PANEL */
+
+.child-print-controls {
+    margin: 0 0 24px;
+    padding: 21px;
+    border: 1px solid #e2eae4;
+    border-radius: 14px;
+    background: #f8faf8;
+}
+
+.child-print-heading {
+    margin-bottom: 16px;
+}
+
+.child-print-heading h3 {
+    margin: 0;
+    color: #20382e;
+    font-size: 16px;
+}
+
+.child-print-heading p {
+    margin: 6px 0 0;
+    color: #7b8780;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.child-print-controls label {
+    margin-top: 0;
+    font-size: 12px;
+}
+
+#childPrintYear {
+    width: 180px;
+    max-width: 100%;
+    background: white;
+}
+
+.child-print-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 16px;
+}
+
+.child-print-buttons button {
+    min-height: 40px;
+    margin: 0;
+    font-size: 12px;
+}
+
+/* ÉVES KERETEK */
+
+.child-budget-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0 0 26px;
+}
+
+.child-budget-card {
+    position: relative;
+    min-width: 0;
+    padding: 22px;
+    overflow: hidden;
+    border: 1px solid #e2eae4;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(23, 59, 50, .04);
+}
+
+.child-budget-card.clothing {
+    border-top: 3px solid #34775b;
+}
+
+.child-budget-card.sports {
+    border-top: 3px solid #6486a6;
+}
+
+.child-budget-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    color: #536158;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.child-budget-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #edf4ef;
+    font-size: 18px;
+}
+
+.child-budget-card.sports .child-budget-icon {
+    background: #edf2f8;
+}
+
+.child-budget-amount {
+    display: block;
+    color: #173b32;
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    line-height: 1.3;
+}
+
+.child-budget-remaining {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 14px;
+    color: #78847d;
+    font-size: 11px;
+}
+
+.child-budget-remaining span:last-child {
+    color: #24764e;
+    font-weight: 700;
+}
+
+.child-budget-progress {
+    height: 9px;
+    margin-top: 17px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #edf1ee;
+}
+
+.child-budget-progress > span {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #34775b, #68a883);
+    transition: width .35s ease;
+}
+
+.child-budget-card.sports .child-budget-progress > span {
+    background: linear-gradient(90deg, #557b9e, #8eabc7);
+}
+
+.child-budget-footnote {
+    margin-top: 9px;
+    color: #89948d;
+    font-size: 11px;
+}
+
+/* KÜLÖNÁLLÓ ADATLAP-SZEKCIÓK */
+
+.child-section {
+    min-width: 0;
+    margin-top: 24px;
+    padding: 21px;
+    border: 1px solid #e6ece8;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.child-section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 17px;
+}
+
+.child-section-heading h3 {
+    margin: 0;
+    color: #20382e;
+    font-size: 16px;
+}
+
+.child-section-heading p {
+    margin: 5px 0 0;
+    color: #849088;
+    font-size: 12px;
+}
+
+/* VÁSÁRLÁSOK */
+
+.child-purchase-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #e8ede9;
+    border-radius: 10px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.child-purchase-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: separate;
+    border-spacing: 0;
+    white-space: normal;
+}
+
+.child-purchase-table thead {
+    background: #f5f8f6;
+}
+
+.child-purchase-table th {
+    padding: 13px 12px;
+    color: #68766d;
+    font-size: 10px;
+    letter-spacing: .35px;
+    white-space: nowrap;
+}
+
+.child-purchase-table td {
+    padding: 13px 12px;
+    border-top: 1px solid #edf1ee;
+    color: #46534b;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.child-purchase-table tbody tr:hover {
+    background: #f8fbf9;
+}
+
+.child-purchase-table td strong {
+    color: #243a2f;
+}
+
+.child-purchase-empty {
+    padding: 35px 15px !important;
+    text-align: center;
+}
+
+.child-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: #edf3ef;
+    color: #476553;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* BIZONYLATOK */
+
+#childReceiptsList.child-receipts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 14px;
+}
+
+.receipt-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid #e5ebe6;
+    border-radius: 13px;
+    background: #fff;
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.receipt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(23, 59, 50, .07);
+}
+
+.receipt-card-header {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 13px;
+}
+
+.receipt-card-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #edf4ef;
+    font-size: 18px;
+}
+
+.receipt-card h4 {
+    min-width: 0;
+    margin: 0;
+    color: #263c30;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.receipt-card p {
+    margin: 5px 0;
+    color: #77847c;
+    font-size: 11px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.receipt-amount {
+    display: block;
+    margin: 12px 0;
+    color: #173b32;
+    font-size: 20px;
+}
+
+.receipt-card a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* ÜRES ÁLLAPOTOK */
+
+.child-empty-state {
+    grid-column: 1 / -1;
+    padding: 30px 20px;
+    border: 1px dashed #dce5de;
+    border-radius: 12px;
+    background: #fafcfb;
+    color: #78847d;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.child-empty-icon {
+    margin-bottom: 10px;
+    font-size: 27px;
+}
+
+.child-empty-description {
+    margin-top: 6px;
+    color: #929c95;
+    font-size: 11px;
+}
+
+/* VÁSÁRLÁSI TÁBLÁZAT – MOBIL KÁRTYÁS MEGJELENÍTÉS */
+
+@media (max-width: 700px) {
+    #childDetail {
+        padding: 15px;
+        border-radius: 13px;
+    }
+
+    #childDetailName {
+        font-size: 21px;
+    }
+
+    .child-budget-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .child-budget-card {
+        padding: 18px;
+    }
+
+    .child-section {
+        padding: 15px;
+        margin-top: 17px;
+    }
+
+    .child-section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .child-print-controls {
+        padding: 16px;
+    }
+
+    .child-print-buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .child-print-buttons button {
+        width: 100%;
+    }
+
+    #childPrintYear {
+        width: 100%;
+    }
+
+    #childPurchaseTable {
+        display: block;
+    }
+
+    .child-purchase-table-wrap {
+        overflow: visible;
+        border: 0;
+    }
+
+    .child-purchase-table {
+        display: block;
+        min-width: 0;
+        white-space: normal;
+    }
+
+    .child-purchase-table thead {
+        display: none;
+    }
+
+    .child-purchase-table tbody {
+        display: grid;
+        gap: 12px;
+    }
+
+    .child-purchase-table tr {
+        display: block;
+        padding: 12px;
+        border: 1px solid #e4ebe6;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 2px 9px rgba(23, 59, 50, .035);
+    }
+
+    .child-purchase-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 8px 2px;
+        border: 0;
+        border-bottom: 1px solid #f0f3f1;
+        text-align: right;
+        font-size: 12px;
+    }
+
+    .child-purchase-table td:last-child {
+        border-bottom: 0;
+    }
+
+    .child-purchase-table td::before {
+        content: attr(data-label);
+        flex: 0 0 43%;
+        color: #78847d;
+        font-size: 10px;
+        font-weight: 700;
+        text-align: left;
+    }
+
+    .child-purchase-table td.child-purchase-empty {
+        display: block;
+        text-align: center;
+    }
+
+    .child-purchase-table td.child-purchase-empty::before {
+        display: none;
+    }
+
+    .child-purchase-table td button {
+        max-width: 55%;
+    }
+
+    #childReceiptsList.child-receipts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .child-card-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .child-card-actions button:first-child {
+        grid-column: auto;
+    }
+
+    .child-management-controls {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .child-management-controls button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 380px) {
+    .child-budget-amount {
+        font-size: 23px;
+    }
+
+    .child-card {
+        padding: 15px;
+    }
+
+    .child-section {
+        padding: 12px;
+    }
+}
